@@ -6,7 +6,7 @@ class Record {
   String fromDate;
   String toDate;
 
-  todoMap() {
+  recordMap() {
     var mapping = Map<String, dynamic>();
     mapping['id'] = id;
     mapping['task'] = task;
