@@ -10,11 +10,11 @@ class RecordScreen extends StatefulWidget {
 }
 
 class _RecordScreenState extends State<RecordScreen> {
-  var _todoTaskController = TextEditingController();
-  var _todoTagController = TextEditingController();
-  var _todoDateController = TextEditingController();
-  var _todoFromController = TextEditingController();
-  var _todoToController = TextEditingController();
+  var _recordTaskController = TextEditingController();
+  var _recordTagController = TextEditingController();
+  var _recordDateController = TextEditingController();
+  var _recordFromController = TextEditingController();
+  var _recordToController = TextEditingController();
 
   final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
 
@@ -24,7 +24,7 @@ class _RecordScreenState extends State<RecordScreen> {
   }
   DateTime _dateTime = DateTime.now();
 
-  _selectedTodoDate(BuildContext context) async {
+  _selectedRecordDate(BuildContext context) async {
     var _pickedDate = await showDatePicker(
       context: context,
       initialDate: _dateTime,
@@ -35,7 +35,7 @@ class _RecordScreenState extends State<RecordScreen> {
     if (_pickedDate != null) {
       setState(() {
         _dateTime = _pickedDate;
-        _todoDateController.text = DateFormat('yyyy-MM-dd').format(_pickedDate);
+        _recordDateController.text = DateFormat('yyyy-MM-dd').format(_pickedDate);
       });
     }
   }
@@ -45,7 +45,7 @@ class _RecordScreenState extends State<RecordScreen> {
     return Scaffold(
       key: _globalKey,
       appBar: AppBar(
-        title: Text('Todo'),
+        title: Text('Add a Record'),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -53,41 +53,41 @@ class _RecordScreenState extends State<RecordScreen> {
           child: Column(
             children: [
               TextField(
-                controller: _todoTaskController,
+                controller: _recordTaskController,
                 decoration: InputDecoration(
                   labelText: 'Task',
                   hintText: 'Write your task here',
                 ),
               ),
               TextField(
-                controller: _todoTagController,
+                controller: _recordTagController,
                 decoration: InputDecoration(
                   labelText: 'Tag',
                   hintText: 'Write your tag here',
                 ),
               ),
               TextFormField(
-                controller: _todoDateController,
+                controller: _recordDateController,
                 decoration: InputDecoration(
                   labelText: 'Date',
                   hintText: 'Select Date',
                   prefixIcon: InkWell(
                     onTap: () {
-                      _selectedTodoDate(context);
+                      _selectedRecordDate(context);
                     },
                     child: Icon(Icons.calendar_today),
                   ),
                 ),
               ),
               TextField(
-                controller: _todoFromController,
+                controller: _recordFromController,
                 decoration: InputDecoration(
                   labelText: 'From',
                   hintText: 'Start time',
                 ),
               ),
               TextField(
-                controller: _todoToController,
+                controller: _recordToController,
                 decoration: InputDecoration(
                   labelText: 'To',
                   hintText: 'End time',
@@ -98,16 +98,16 @@ class _RecordScreenState extends State<RecordScreen> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  var todoObject = Record();
+                  var recordObject = Record();
 
-                  todoObject.task = _todoTaskController.text;
-                  todoObject.tag = _todoTagController.text;
-                  todoObject.date = _todoDateController.text;
-                  todoObject.fromDate = _todoFromController.text;
-                  todoObject.toDate = _todoToController.text;
+                  recordObject.task = _recordTaskController.text;
+                  recordObject.tag = _recordTagController.text;
+                  recordObject.date = _recordDateController.text;
+                  recordObject.fromDate = _recordFromController.text;
+                  recordObject.toDate = _recordToController.text;
 
                   var _recordService = RecordService();
-                  var result = await _recordService.saveRecord(todoObject);
+                  var result = await _recordService.saveRecord(recordObject);
                   if (result > 0) {
                     Navigator.pop(context);
                   }
