@@ -9,7 +9,7 @@ class RecordService {
   }
 
   saveRecord(Record record) async {
-    return await _repository.insertData('record', record.todoMap());
+    return await _repository.insertData('record', record.recordMap());
   }
 
   //read todos
